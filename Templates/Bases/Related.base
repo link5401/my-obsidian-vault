@@ -1,0 +1,32 @@
+filters:
+  and:
+    - file.path != this.file.path
+formulas:
+  LinksOverlap: formula.Related.length
+  Related: list(this.file.links).filter(list(file.links).containsAny(value)).unique()
+  BacklinksCount: file.backlinks.length
+properties:
+  formula.LinksOverlap:
+    displayName: Links overlap
+  file.name:
+    displayName: Name
+  formula.BacklinksCount:
+    displayName: Backlinks
+  formula.Related:
+    displayName: Links
+views:
+  - type: table
+    name: Related
+    filters:
+      or:
+        - formula.LinksOverlap > 1
+        - file.hasLink(this)
+        - this.file.hasLink(file)
+    order:
+      - file.name
+      - formula.Related
+    sort:
+      - property: formula.LinksOverlap
+        direction: DESC
+      - property: formula.BacklinksCount
+        direction: DESC

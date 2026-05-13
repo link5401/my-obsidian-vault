@@ -1,0 +1,36 @@
+filters:
+  and:
+    - categories.contains(link("Meetings"))
+    - '!file.name.contains("Template")'
+properties:
+  note.date:
+    displayName: Date
+  note.people:
+    displayName: People
+  note.type:
+    displayName: Type
+  file.name:
+    displayName: Meeting
+  note.org:
+    displayName: Org
+views:
+  - type: table
+    name: Meetings
+    order:
+      - file.name
+      - date
+      - type
+      - people
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: Person
+    filters:
+      and:
+        - list(people).contains(this)
+    order:
+      - file.name
+      - date
+      - type
+      - people
