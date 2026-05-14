@@ -22,13 +22,13 @@ topics:
 
 - Goal: improve final `pipe_network.ifc` quality for `dataset-004`.
 - Current command focus: `--no-support-normal-check`, `--no-support-connected-component-check`, and `--support-validate-multisegment`.
-- Current finding: support validation matters, but dedupe is also still too aggressive and can remove good geometry before or during topology/export preparation.
+- Current finding: support validation matters, and the latest commit appears to resolve the overly aggressive dedupe behavior that was removing good geometry before or during topology/export preparation.
 
 ## Current Status
 
 - `--support-validate-multisegment` is still the only one of the three support flags actively adding protection in the current command.
 - `--no-support-normal-check` and `--no-support-connected-component-check` both bias the run toward higher recall.
-- The attempted obs-count-based dedupe fix was directionally useful, but the dedupe behavior is still too aggressive.
+- Latest outcome: the dedupe issue now appears resolved by the newest commit.
 
 ## Export Impact
 
@@ -106,11 +106,11 @@ Intended effect:
 Result so far:
 
 - Attempt recorded.
-- Dedupe is still too aggressive.
-- The issue is not fully resolved by switching the winner from longest to most-observed.
+- Earlier result: switching the winner from longest to most-observed was directionally useful, but not sufficient on its own.
+- Latest result: the newest commit appears to resolve the remaining overly aggressive dedupe behavior.
+- Working conclusion: source coverage and `pipe_network.ifc` quality now look corrected relative to the earlier failure mode.
 
-## Next Check
+## Resolution Note
 
-- Inspect where remaining geometry loss happens after the winner-selection change.
-- Determine whether the remaining over-merge is happening in `_dedupe_geometries`, parallel-edge dedupe, or later topology simplification.
-- Compare source coverage and final `pipe_network.ifc` quality on `dataset-004` after this attempted fix, with attention to whether valid parallel runs are still being collapsed.
+- Status: appears resolved by the latest commit.
+- Keep an eye on future runs for regressions in valid parallel-run handling or export simplification, but this note no longer reflects an active unresolved dedupe issue.
